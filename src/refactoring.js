@@ -12,7 +12,7 @@ function cloneCopyEvent(src, dest) {
   }
 }
 
-function _removeEvent(dest, pdataOld) {
+function _removeOldPrivateData(dest, pdataOld) {
   var pdataCur = data_priv.set(dest, pdataOld);
   delete pdataCur.handle;
   pdataCur.events = {};
@@ -33,11 +33,11 @@ function _addEvents(events, dest) {
 }
 
 function _copyPrivateData(src, dest) {
-  var pdataOld = data_priv.access(src);
-  var events = pdataOld.events;
+  var oldPrivateData = data_priv.access(src);
+  var events = oldPrivateData.events;
 
   if (events) {
-    _removeEvent(dest, pdataOld);
+    _removeOldPrivateData(dest, oldPrivateData);
     _addEvents(events, dest);
   }
 }
