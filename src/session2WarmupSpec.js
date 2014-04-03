@@ -22,16 +22,14 @@
       });
     });
 
-    var convert = function(arabic) {
-      if (arabic == 'V') {
-        return 5;
-      }
-      if (arabic == 'X') {
+    var c = function(n) {
+      if (n == 'V') return 5;
+      if (n == 'X')
         return 10;
-      }
-      if (arabic == 'L') {
+      if (n == 'L') {
         return 50;
+      } else {
+        return 1;
       }
-      return 1;
     };
 
