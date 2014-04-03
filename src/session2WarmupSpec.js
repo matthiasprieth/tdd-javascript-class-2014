@@ -6,3 +6,5 @@
         expect(convert('I')).toBe(1);
       });
     });
+
+    var convert = function() {};
