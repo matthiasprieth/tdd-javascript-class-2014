@@ -5,7 +5,7 @@
  */
 
 ddescribe('image rotator', function() {
-  describe('rotate depending on the scroll offset', function() {
+  describe('calcuate angle depending on scroll height', function() {
     it('scroll is 0, rotate by 0 degrees', function() {
       expect(getAngleByScrollOffset(0, 100))
         .toBe(0);
