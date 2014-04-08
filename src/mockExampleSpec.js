@@ -25,8 +25,10 @@ ddescribe('image rotator', function() {
   });
 
   it('rotate image with the angle, depending on scrollOffset', function() {
-    rotateImageByScrollOffset(100, 200);
-    expect(rotateImageByAngle)
+    spyOn(rotateImage, 'byAngle');
+
+    rotateImage.byScrollOffset(100, 200);
+    expect(rotateImage.byAngle)
       .toHaveBeenCalledWith(45);
   });
   
@@ -36,11 +38,14 @@ function getAngleByScrollOffset(scrollOffset, pageHeight) {
   return scrollOffset/pageHeight * 90;
 }
 
-function rotateImageByScrollOffset(scrollOffset, pageHeight) {
+var rotateImage = {
+  byScrollOffset: function(scrollOffset, pageHeight) {
 
-}
+  },
 
-function rotateImageByAngle(angle) {
-  var image = jQuery('#' + imageName);
-  image.css('webkitTransform', 'rotate(' + angle + ')');
-}
+  byAngle: function(angle) {
+    var image = jQuery('#' + imageName);
+    image.css('webkitTransform', 'rotate(' + angle + ')');
+  }
+};
+
