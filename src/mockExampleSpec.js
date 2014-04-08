@@ -4,20 +4,22 @@
 - rotate image clockwise 90º for every full page height scrolled down
  */
 
-ddescribe('rotate depending on the scroll offset', function() {
-  it('scroll is 0, rotate by 0 degrees', function() {
-    expect(getAngleByScrollOffset(0, 100))
-      .toBe(0);
-  });
-  it('scroll is 250, rotate by 45 degrees', function() {
-    var pageHeight = 500;
-    expect(getAngleByScrollOffset(250, pageHeight))
-      .toBe(45);
-  });
-  it('scroll is 400 (full page), rotate by 90 degrees', function() {
-    var pageHeight = 400;
-    expect(getAngleByScrollOffset(400, pageHeight))
-      .toBe(90);
+ddescribe('image rotator', function() {
+  describe('rotate depending on the scroll offset', function() {
+    it('scroll is 0, rotate by 0 degrees', function() {
+      expect(getAngleByScrollOffset(0, 100))
+        .toBe(0);
+    });
+    it('scroll is 250, rotate by 45 degrees', function() {
+      var pageHeight = 500;
+      expect(getAngleByScrollOffset(250, pageHeight))
+        .toBe(45);
+    });
+    it('scroll is 400 (full page), rotate by 90 degrees', function() {
+      var pageHeight = 400;
+      expect(getAngleByScrollOffset(400, pageHeight))
+        .toBe(90);
+    });
   });
 });
 
