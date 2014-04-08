@@ -12,30 +12,25 @@ function scrollDown(scrollOffset, pageHeight) {
 }
 
 ddescribe('image rotator', function() {
-  describe('calcuate angle depending on scroll height', function() {
+  describe('rotate image depending on scroll height', function() {
+    beforeEach(function() {
+      spyOn(rotateImage, 'byAngle');
+    });
     it('scroll is 0, rotate by 0 degrees', function() {
-      expect(getAngleByScrollOffset(0, 100))
-        .toBe(0);
+      scrollDown(0, 100);
+      expect(rotateImage.byAngle)
+        .toHaveBeenCalledWith(0);
     });
     it('scroll is 250, rotate by 45 degrees', function() {
-      var pageHeight = 500;
-      expect(getAngleByScrollOffset(250, pageHeight))
-        .toBe(45);
+      scrollDown(250, 500);
+      expect(rotateImage.byAngle)
+        .toHaveBeenCalledWith(45);
     });
     it('scroll is 400 (full page), rotate by 90 degrees', function() {
-      var pageHeight = 400;
-      expect(getAngleByScrollOffset(400, pageHeight))
-        .toBe(90);
+      scrollDown(400, 400);
+      expect(rotateImage.byAngle)
+        .toHaveBeenCalledWith(90);
     });
-  });
-
-  it('rotate image with the angle, depending on scrollOffset', function() {
-    spyOn(rotateImage, 'byAngle');
-
-    scrollDown(100, 200);
-
-    expect(rotateImage.byAngle)
-      .toHaveBeenCalledWith(45);
   });
 
   it('should update the angle on every scroll change', function() {
