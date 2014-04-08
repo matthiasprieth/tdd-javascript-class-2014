@@ -36,7 +36,7 @@ ddescribe('image rotator', function() {
     spyOn(rotateImage, 'byScrollOffset');
 
     var scrollOffset = 100;
-    scrollDownTo(scrollOffset);
+    scrollHandler.scrollDownTo(scrollOffset);
 
     expect(rotateImage.byScrollOffset)
       .toHaveBeenCalledWith(scrollOffset);
@@ -48,9 +48,12 @@ function getAngleByScrollOffset(scrollOffset, pageHeight) {
   return scrollOffset/pageHeight * 90;
 }
 
-function scrollDownTo(scrollOffset) {
-  rotateImage.byScrollOffset(scrollOffset);
-}
+var scrollHandler = {
+  scrollDownTo: function(scrollOffset) {
+    rotateImage.byScrollOffset(scrollOffset);
+  }
+};
+
 
 var rotateImage = {
   byScrollOffset: function(scrollOffset, pageHeight) {
