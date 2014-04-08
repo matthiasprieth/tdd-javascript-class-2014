@@ -25,14 +25,19 @@ ddescribe('image rotator', function() {
   });
 
   it('rotate image with the angle, depending on scrollOffset', function() {
-    var angle = 0;
-    rotateImageByAngle(angle);
+    rotateImageByScrollOffset(100, 200);
+    expect(rotateImageByAngle)
+      .toHaveBeenCalledWith(45);
   });
   
 });
 
 function getAngleByScrollOffset(scrollOffset, pageHeight) {
   return scrollOffset/pageHeight * 90;
+}
+
+function rotateImageByScrollOffset(scrollOffset, pageHeight) {
+
 }
 
 function rotateImageByAngle(angle) {
