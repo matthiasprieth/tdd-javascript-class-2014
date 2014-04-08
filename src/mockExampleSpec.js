@@ -31,11 +31,25 @@ ddescribe('image rotator', function() {
     expect(rotateImage.byAngle)
       .toHaveBeenCalledWith(45);
   });
+
+  it('should update the angle on every scroll change', function() {
+    spyOn(rotateImage, 'byScrollOffset');
+
+    var scrollOffset = 100;
+    scrollDownTo(scrollOffset);
+
+    expect(rotateImage.byScrollOffset)
+      .toHaveBeenCalled();
+  });
   
 });
 
 function getAngleByScrollOffset(scrollOffset, pageHeight) {
   return scrollOffset/pageHeight * 90;
+}
+
+function scrollDownTo(scrollOffset) {
+  rotateImage.byScrollOffset();
 }
 
 var rotateImage = {
