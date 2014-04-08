@@ -39,7 +39,7 @@ ddescribe('image rotator', function() {
     scrollDownTo(scrollOffset);
 
     expect(rotateImage.byScrollOffset)
-      .toHaveBeenCalled();
+      .toHaveBeenCalledWith(scrollOffset);
   });
   
 });
@@ -49,7 +49,7 @@ function getAngleByScrollOffset(scrollOffset, pageHeight) {
 }
 
 function scrollDownTo(scrollOffset) {
-  rotateImage.byScrollOffset();
+  rotateImage.byScrollOffset(scrollOffset);
 }
 
 var rotateImage = {
