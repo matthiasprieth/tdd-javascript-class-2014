@@ -5,12 +5,20 @@
  */
 
 ddescribe('rotate depending on the scroll offset', function() {
-  it('scroll is 0, rotate by 0 percent', function() {
+  it('scroll is 0, rotate by 0 degrees', function() {
     expect(getAngleByScrollOffset(0))
       .toBe(0);
   });
+  it('scroll is 100, rotate by 0 degrees', function() {
+    var pageHeight = 500;
+    expect(getAngleByScrollOffset(250, pageHeight))
+      .toBe(45);
+  });
 });
 
-function getAngleByScrollOffset() {
+function getAngleByScrollOffset(scrollOffset) {
+  if (scrollOffset) {
+    return 45;
+  }
   return 0;
 }
