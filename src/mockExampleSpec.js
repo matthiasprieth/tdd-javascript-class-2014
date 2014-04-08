@@ -9,7 +9,7 @@ ddescribe('rotate depending on the scroll offset', function() {
     expect(getAngleByScrollOffset(0))
       .toBe(0);
   });
-  it('scroll is 100, rotate by 0 degrees', function() {
+  it('scroll is 250, rotate by 45 degrees', function() {
     var pageHeight = 500;
     expect(getAngleByScrollOffset(250, pageHeight))
       .toBe(45);
