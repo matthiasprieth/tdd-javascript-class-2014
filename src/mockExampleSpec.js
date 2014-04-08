@@ -1,3 +1,5 @@
+var jQuery = require('jQuery');
+
 /*
 - wait until image is loaded
 - load it into the <img> tag
@@ -21,8 +23,19 @@ ddescribe('image rotator', function() {
         .toBe(90);
     });
   });
+
+  it('rotate image with the angle, depending on scrollOffset', function() {
+    var angle = 0;
+    rotateImageByAngle(angle);
+  });
+  
 });
 
 function getAngleByScrollOffset(scrollOffset, pageHeight) {
   return scrollOffset/pageHeight * 90;
+}
+
+function rotateImageByAngle(angle) {
+  var image = jQuery('#' + imageName);
+  image.css('webkitTransform', 'rotate(' + angle + ')');
 }

@@ -8,6 +8,9 @@
   },
   "author": "Wolfram Kriesing",
   "license": "MIT",
+  "dependencies": {
+    "jquery": "~2.1.0"
+  },
   "devDependencies": {
     "jasmine-matchers": "^0.2.3",
     "jasmine-node": "^1.14.3"
