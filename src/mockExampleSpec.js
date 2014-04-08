@@ -36,10 +36,12 @@ ddescribe('image rotator', function() {
     spyOn(rotateImage, 'byScrollOffset');
 
     var scrollOffset = 100;
+    var pageHeight = 200;
+    scrollHandler.pageHeight = pageHeight;
     scrollHandler.scrollDownTo(scrollOffset);
 
     expect(rotateImage.byScrollOffset)
-      .toHaveBeenCalledWith(scrollOffset);
+      .toHaveBeenCalledWith(scrollOffset, pageHeight);
   });
   
 });
@@ -49,8 +51,9 @@ function getAngleByScrollOffset(scrollOffset, pageHeight) {
 }
 
 var scrollHandler = {
+  pageHeight: 0,
   scrollDownTo: function(scrollOffset) {
-    rotateImage.byScrollOffset(scrollOffset);
+    rotateImage.byScrollOffset(scrollOffset, scrollHandler.pageHeight);
   }
 };
 
