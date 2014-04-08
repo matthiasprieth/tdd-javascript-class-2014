@@ -6,7 +6,7 @@
 
 ddescribe('rotate depending on the scroll offset', function() {
   it('scroll is 0, rotate by 0 degrees', function() {
-    expect(getAngleByScrollOffset(0))
+    expect(getAngleByScrollOffset(0, 100))
       .toBe(0);
   });
   it('scroll is 250, rotate by 45 degrees', function() {
@@ -14,11 +14,13 @@ ddescribe('rotate depending on the scroll offset', function() {
     expect(getAngleByScrollOffset(250, pageHeight))
       .toBe(45);
   });
+  it('scroll is 400 (full page), rotate by 90 degrees', function() {
+    var pageHeight = 400;
+    expect(getAngleByScrollOffset(400, pageHeight))
+      .toBe(90);
+  });
 });
 
-function getAngleByScrollOffset(scrollOffset) {
-  if (scrollOffset) {
-    return 45;
-  }
-  return 0;
+function getAngleByScrollOffset(scrollOffset, pageHeight) {
+  return scrollOffset/pageHeight * 90;
 }
