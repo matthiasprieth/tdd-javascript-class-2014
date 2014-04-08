@@ -40,7 +40,7 @@ function getAngleByScrollOffset(scrollOffset, pageHeight) {
 
 var rotateImage = {
   byScrollOffset: function(scrollOffset, pageHeight) {
-
+    rotateImage.byAngle(getAngleByScrollOffset(scrollOffset, pageHeight));
   },
 
   byAngle: function(angle) {
