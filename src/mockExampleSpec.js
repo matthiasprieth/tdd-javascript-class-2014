@@ -65,7 +65,7 @@ var rotateImage = {
 
   byAngle: function(angle) {
     var image = jQuery('#' + imageName);
-    image.css('webkitTransform', 'rotate(' + angle + ')');
+    image.css('webkitTransform', 'rotate(' + angle + 'deg)');
   }
 };
 
