@@ -51,5 +51,13 @@
       .toHaveBeenCalled();
   });
 
+  it('should rotate the image by 90º', function() {
+    spyOn(Image.prototype, 'rotate');
+
+    showAndRotateImage('imageId', 90);
+    expect(Image.prototype.rotate)
+      .toHaveBeenCalledWith(90);
+  });
+
 
 
