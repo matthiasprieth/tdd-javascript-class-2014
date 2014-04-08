@@ -12,10 +12,11 @@ function scrollDown(scrollOffset, pageHeight) {
 }
 
 ddescribe('image rotator', function() {
+  beforeEach(function() {
+    spyOn(rotateImage, 'byAngle');
+  });
+
   describe('rotate image depending on scroll height', function() {
-    beforeEach(function() {
-      spyOn(rotateImage, 'byAngle');
-    });
     it('scroll is 0, rotate by 0 degrees', function() {
       scrollDown(0, 100);
       expect(rotateImage.byAngle)
@@ -34,14 +35,13 @@ ddescribe('image rotator', function() {
   });
 
   it('should update the angle on every scroll change', function() {
-    spyOn(rotateImage, 'byScrollOffset');
+    scrollDown(100, 200);
+    expect(rotateImage.byAngle)
+      .toHaveBeenCalledWith(45);
 
-    var scrollOffset = 100;
-    var pageHeight = 200;
-    scrollDown(scrollOffset, pageHeight);
-
-    expect(rotateImage.byScrollOffset)
-      .toHaveBeenCalledWith(scrollOffset, pageHeight);
+    scrollDown(200, 200);
+    expect(rotateImage.byAngle)
+      .toHaveBeenCalledWith(90);
   });
 
 });
