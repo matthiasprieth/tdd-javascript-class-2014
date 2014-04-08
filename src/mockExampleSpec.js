@@ -6,6 +6,11 @@ var jQuery = require('jQuery');
 - rotate image clockwise 90º for every full page height scrolled down
  */
 
+function scrollDown(scrollOffset, pageHeight) {
+  scrollHandler.pageHeight = pageHeight;
+  scrollHandler.scrollDownTo(scrollOffset);
+}
+
 ddescribe('image rotator', function() {
   describe('calcuate angle depending on scroll height', function() {
     it('scroll is 0, rotate by 0 degrees', function() {
@@ -27,7 +32,8 @@ ddescribe('image rotator', function() {
   it('rotate image with the angle, depending on scrollOffset', function() {
     spyOn(rotateImage, 'byAngle');
 
-    rotateImage.byScrollOffset(100, 200);
+    scrollDown(100, 200);
+
     expect(rotateImage.byAngle)
       .toHaveBeenCalledWith(45);
   });
@@ -37,13 +43,12 @@ ddescribe('image rotator', function() {
 
     var scrollOffset = 100;
     var pageHeight = 200;
-    scrollHandler.pageHeight = pageHeight;
-    scrollHandler.scrollDownTo(scrollOffset);
+    scrollDown(scrollOffset, pageHeight);
 
     expect(rotateImage.byScrollOffset)
       .toHaveBeenCalledWith(scrollOffset, pageHeight);
   });
-  
+
 });
 
 function getAngleByScrollOffset(scrollOffset, pageHeight) {
