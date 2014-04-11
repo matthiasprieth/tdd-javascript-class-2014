@@ -1,28 +1,10 @@
-/*
-function showAndRotateImage(imageId, angle) {
-    var image = jQuery('#' + imageId);
-    image.show();
-    image.css('webkitTransform', 'rotate(' + angle + 'deg)');
-}
-*/
-
-//var jQuery = require('jquery');
-
 function Image(imageId) {
     this._imageId = imageId;
 }
 Image.prototype = {
 
-    _getElement: function() {
-        //return jQuery('#' + this._imageId);
-    },
-
     show: function() {
         //this._getElement().show();
-    },
-
-    hide: function() {
-        //this._getElement().hide();
     },
 
     rotate: function(angle) {
@@ -43,6 +25,13 @@ Compass.prototype = {
     },
 
     getDegree: function() {
+        if(this.degree >= 360 || this.degree < 0){
+            this.degree = 0;
+        }
+        return this.degree;
+    },
+
+    getCardinalDegree: function() {
         switch(this.degree) {
             case 0:
                 return 'North';
@@ -61,11 +50,11 @@ Compass.prototype = {
             case 315:
                 return 'North-West';
         }
-        if(degree >= 360 || degree < 0){
-            degree = 0;
+        if(this.degree >= 360 || this.degree < 0){
+            this.degree = 0;
             return 'North';
         }else{
-            return degree;
+            return this.degree;
         }
     }
 };
@@ -101,29 +90,36 @@ describe("Compass", function() {
     });
 
     it("compass should show cardinal points", function() {
-        expect(myCompass.getDegree()).toEqual("North");
+        expect(myCompass.getCardinalDegree()).toEqual("North");
         myCompass.increaseDegree(45);
-        expect(myCompass.getDegree()).toEqual("North-East");
+        expect(myCompass.getCardinalDegree()).toEqual("North-East");
         myCompass.increaseDegree(45);
-        expect(myCompass.getDegree()).toEqual("East");
+        expect(myCompass.getCardinalDegree()).toEqual("East");
         myCompass.increaseDegree(45);
-        expect(myCompass.getDegree()).toEqual("South-East");
+        expect(myCompass.getCardinalDegree()).toEqual("South-East");
         myCompass.increaseDegree(45);
-        expect(myCompass.getDegree()).toEqual("South");
+        expect(myCompass.getCardinalDegree()).toEqual("South");
         myCompass.increaseDegree(45);
-        expect(myCompass.getDegree()).toEqual("South-West");
+        expect(myCompass.getCardinalDegree()).toEqual("South-West");
         myCompass.increaseDegree(45);
-        expect(myCompass.getDegree()).toEqual("West");
+        expect(myCompass.getCardinalDegree()).toEqual("West");
         myCompass.increaseDegree(45);
-        expect(myCompass.getDegree()).toEqual("North-West");
+        expect(myCompass.getCardinalDegree()).toEqual("North-West");
         myCompass.increaseDegree(45);
     });
     it("compass should check if out of range", function() {
         for (var i=360;i<=370;i++){
-           expect(myCompass.getDegree(i)).toEqual('North');
+           expect(myCompass.getCardinalDegree(i)).toEqual('North');
         }
         for (var i=0;i>=-10;i--){
-           expect(myCompass.getDegree(i)).toEqual('North');
+           expect(myCompass.getCardinalDegree(i)).toEqual('North');
         }
+    });
+    it("angle 90 should rotate with angle 90", function() {
+        spyOn(Image.prototype, 'rotate');
+        myCompass.setDegree(90);
+        showAndRotateImage('imageId', myCompass.getDegree());
+
+        expect(Image.prototype.rotate).toHaveBeenCalledWith(90);
     });
 });
