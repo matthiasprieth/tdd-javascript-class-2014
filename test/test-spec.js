@@ -1,33 +1,28 @@
 var jQuery = require('jquery');
 
-var degree = 0;
-function getDegree() {
-    switch(degree) {
-         case 0:
-           return 'Nord';
-         case 90:
-           return 'East';
-        case 180:
-           return 'South';
-        case 270:
-           return 'West';
-    }
+cardinalPoints ={
+    0:'North',
+    45:'North-East',
+    90:'East',
+    135:'South-East',
+    180:'South',
+    225:'South-West',
+    270:'West',
+    315:'North-West'
+}
+function getDegree(degree) {
+    return cardinalPoints[degree];
 }
 
 describe("Compass", function() {
-    it("compass should show Nord", function() {
-        expect(getDegree()).toEqual("Nord");
-    });
-    it("compass should show East", function() {
-        degree += 90;
-        expect(getDegree()).toEqual("East");
-    });
-    it("compass should show South", function() {
-        degree += 90;
-        expect(getDegree()).toEqual("South");
-    });
-    it("compass should show West", function() {
-        degree += 90;
-        expect(getDegree()).toEqual("West");
+    it("compass should show cardinal points", function() {
+        expect(getDegree(0)).toEqual("North");
+        expect(getDegree(45)).toEqual("North-East");
+        expect(getDegree(90)).toEqual("East");
+        expect(getDegree(135)).toEqual("South-East");
+        expect(getDegree(180)).toEqual("South");
+        expect(getDegree(225)).toEqual("South-West");
+        expect(getDegree(270)).toEqual("West");
+        expect(getDegree(315)).toEqual("North-West");
     });
 });
