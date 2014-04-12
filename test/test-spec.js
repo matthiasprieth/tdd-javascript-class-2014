@@ -3,7 +3,7 @@ function Compass() {
     this._cardinalPoints = ["North","North-East","East","South-East","South","South-West","West","North-West"];
 }
 Compass.prototype = {
-    setDegree: function(newDegree) {
+    updateDegree: function(newDegree) {
         this._degree = newDegree;
     },
 
@@ -111,42 +111,42 @@ describe("Compass tests", function() {
     });
     it("angle 50 should show Text 50 degree", function() {
         spyOn(Field.prototype, 'updateText');
-        myCompass.setDegree(50);
+        myCompass.updateDegree(50);
         showAndUpdateText('fieldId', myCompass.getCardinalOrDegree());
 
         expect(Field.prototype.updateText).toHaveBeenCalledWith(50);
     });
     it("angle 90 should show Text East", function() {
         spyOn(Field.prototype, 'updateText');
-        myCompass.setDegree(90);
+        myCompass.updateDegree(90);
         showAndUpdateText('fieldId', myCompass.getCardinalOrDegree());
 
         expect(Field.prototype.updateText).toHaveBeenCalledWith("East");
     });
     it("angle 360 should show Text North", function() {
         spyOn(Field.prototype, 'updateText');
-        myCompass.setDegree(360);
+        myCompass.updateDegree(360);
         showAndUpdateText('fieldId', myCompass.getCardinalOrDegree());
 
         expect(Field.prototype.updateText).toHaveBeenCalledWith("North");
     });
     it("angle 0 should show Text North", function() {
         spyOn(Field.prototype, 'updateText');
-        myCompass.setDegree(0);
+        myCompass.updateDegree(0);
         showAndUpdateText('fieldId', myCompass.getCardinalOrDegree());
 
         expect(Field.prototype.updateText).toHaveBeenCalledWith("North");
     });
     it("angle 90 should rotate with angle 90", function() {
         spyOn(Image.prototype, 'rotate');
-        myCompass.setDegree(90);
+        myCompass.updateDegree(90);
         showAndRotateImage('imageId', myCompass.getDegree());
 
         expect(Image.prototype.rotate).toHaveBeenCalledWith(90);
     });
     it("angle 360 should rotate with angle 0", function() {
         spyOn(Image.prototype, 'rotate');
-        myCompass.setDegree(360);
+        myCompass.updateDegree(360);
         showAndRotateImage('imageId', myCompass.getDegree());
 
         expect(Image.prototype.rotate).toHaveBeenCalledWith(0);
