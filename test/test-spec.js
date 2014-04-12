@@ -28,6 +28,7 @@ Field.prototype = {
 
 function Compass() {
     this.degree = 0;
+    this.cardinalPoints = ["North","North-East","East","South-East","South","South-West","West","North-West"];
 }
 Compass.prototype = {
     setDegree: function(newDegree) {
@@ -45,29 +46,14 @@ Compass.prototype = {
         return this.degree;
     },
 
-    getCardinalDegree: function() {
-        switch(this.degree) {
-            case 0:
-                return 'North';
-            case 45:
-                return 'North-East';
-            case 90:
-                return 'East';
-            case 135:
-                return 'South-East';
-            case 180:
-                return 'South';
-            case 225:
-                return 'South-West';
-            case 270:
-                return 'West';
-            case 315:
-                return 'North-West';
-        }
+    getCardinalOrDegree: function() {
         if(this.degree >= 360 || this.degree < 0){
             this.degree = 0;
             return 'North';
-        }else{
+        }else if (this.degree%45 === 0){
+            return this.cardinalPoints[this.degree/45];
+        }
+        else{
             return this.degree;
         }
     }
@@ -84,20 +70,6 @@ function showAndUpdateText(text) {
     field.updateText(text);
 }
 
-/*
-cardinalPoints = {
-    0:'North',
-    45:'North-East',
-    90:'East',
-    135:'South-East',
-    180:'South',
-    225:'South-West',
-    270:'West',
-    315:'North-West'
-}
-*/
-
-
 describe("Compass", function() {
 
     var myImage;
@@ -109,29 +81,29 @@ describe("Compass", function() {
     });
 
     it("compass should show cardinal points", function() {
-        expect(myCompass.getCardinalDegree()).toEqual("North");
+        expect(myCompass.getCardinalOrDegree()).toEqual("North");
         myCompass.increaseDegree(45);
-        expect(myCompass.getCardinalDegree()).toEqual("North-East");
+        expect(myCompass.getCardinalOrDegree()).toEqual("North-East");
         myCompass.increaseDegree(45);
-        expect(myCompass.getCardinalDegree()).toEqual("East");
+        expect(myCompass.getCardinalOrDegree()).toEqual("East");
         myCompass.increaseDegree(45);
-        expect(myCompass.getCardinalDegree()).toEqual("South-East");
+        expect(myCompass.getCardinalOrDegree()).toEqual("South-East");
         myCompass.increaseDegree(45);
-        expect(myCompass.getCardinalDegree()).toEqual("South");
+        expect(myCompass.getCardinalOrDegree()).toEqual("South");
         myCompass.increaseDegree(45);
-        expect(myCompass.getCardinalDegree()).toEqual("South-West");
+        expect(myCompass.getCardinalOrDegree()).toEqual("South-West");
         myCompass.increaseDegree(45);
-        expect(myCompass.getCardinalDegree()).toEqual("West");
+        expect(myCompass.getCardinalOrDegree()).toEqual("West");
         myCompass.increaseDegree(45);
-        expect(myCompass.getCardinalDegree()).toEqual("North-West");
+        expect(myCompass.getCardinalOrDegree()).toEqual("North-West");
         myCompass.increaseDegree(45);
     });
     it("compass should check if out of range", function() {
         for (var i=360;i<=370;i++){
-           expect(myCompass.getCardinalDegree(i)).toEqual('North');
+           expect(myCompass.getCardinalOrDegree(i)).toEqual('North');
         }
         for (var i=0;i>=-10;i--){
-           expect(myCompass.getCardinalDegree(i)).toEqual('North');
+           expect(myCompass.getCardinalOrDegree(i)).toEqual('North');
         }
     });
     it("angle 90 should rotate with angle 90", function() {
@@ -144,14 +116,14 @@ describe("Compass", function() {
     it("angle 90 should show Text East", function() {
         spyOn(Field.prototype, 'updateText');
         myCompass.setDegree(90);
-        showAndUpdateText(myCompass.getCardinalDegree());
+        showAndUpdateText(myCompass.getCardinalOrDegree());
 
         expect(Field.prototype.updateText).toHaveBeenCalledWith("East");
     });
     it("angle 50 should show Text 50", function() {
         spyOn(Field.prototype, 'updateText');
         myCompass.setDegree(50);
-        showAndUpdateText(myCompass.getCardinalDegree());
+        showAndUpdateText(myCompass.getCardinalOrDegree());
 
         expect(Field.prototype.updateText).toHaveBeenCalledWith(50);
     });
