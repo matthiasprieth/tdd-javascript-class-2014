@@ -39,6 +39,10 @@ Compass.prototype = {
         this.degree += incDegree;
     },
 
+    getCardinalPoint: function(position) {
+        return this.cardinalPoints[position];
+    },
+
     getDegree: function() {
         if(this.degree >= 360 || this.degree < 0){
             this.degree = 0;
@@ -80,23 +84,11 @@ describe("Compass", function() {
        myCompass = new Compass();
     });
 
-    it("compass should show cardinal points", function() {
-        expect(myCompass.getCardinalOrDegree()).toEqual("North");
-        myCompass.increaseDegree(45);
-        expect(myCompass.getCardinalOrDegree()).toEqual("North-East");
-        myCompass.increaseDegree(45);
-        expect(myCompass.getCardinalOrDegree()).toEqual("East");
-        myCompass.increaseDegree(45);
-        expect(myCompass.getCardinalOrDegree()).toEqual("South-East");
-        myCompass.increaseDegree(45);
-        expect(myCompass.getCardinalOrDegree()).toEqual("South");
-        myCompass.increaseDegree(45);
-        expect(myCompass.getCardinalOrDegree()).toEqual("South-West");
-        myCompass.increaseDegree(45);
-        expect(myCompass.getCardinalOrDegree()).toEqual("West");
-        myCompass.increaseDegree(45);
-        expect(myCompass.getCardinalOrDegree()).toEqual("North-West");
-        myCompass.increaseDegree(45);
+    it("compass should get cardinal point every 45 degree", function() {
+        for (var i=0;i<8;i++){
+            expect(myCompass.getCardinalOrDegree()).toEqual(myCompass.getCardinalPoint(i));
+            myCompass.increaseDegree(45);
+        }
     });
     it("compass should check if out of range", function() {
         for (var i=360;i<=370;i++){
