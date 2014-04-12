@@ -38,6 +38,8 @@ Compass.prototype = {
 };
 
 var imageEl = jQuery(new Image());
+var compassEl = new Compass();
+
 imageEl
     .load(function() {
         jQuery('#compassImage').append(imageEl);
@@ -45,12 +47,19 @@ imageEl
     })
     .attr('src', '/img/compass.png');
 
-function showAndRotateImage(imageId, angle) {
+function showAndRotateImage(imageId) {
     var image = jQuery('#' + imageId);
     image.show();
-    image.css('webkitTransform', 'rotate(' + angle + 'deg)');
+    image.css('webkitTransform', 'rotate(' + compassEl.getDegree() + 'deg)');
+}
+
+function showAndUpdateText(fieldId) {
+    var field = document.getElementById(fieldId);
+    field.innerHTML = compassEl.getCardinalOrDegree();
 }
 
 jQuery(window).scroll(function () {
-    showAndRotateImage("compassImage", jQuery(window).scrollTop()/10);
+    compassEl.updateDegree(parseInt((jQuery(window).scrollTop()/20)%360));
+    showAndRotateImage("compassImage");
+    showAndUpdateText("directionHeading");
 });
