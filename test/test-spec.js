@@ -148,4 +148,11 @@ describe("Compass", function() {
 
         expect(Field.prototype.updateText).toHaveBeenCalledWith("East");
     });
+    it("angle 50 should show Text 50", function() {
+        spyOn(Field.prototype, 'updateText');
+        myCompass.setDegree(50);
+        showAndUpdateText(myCompass.getCardinalDegree());
+
+        expect(Field.prototype.updateText).toHaveBeenCalledWith(50);
+    });
 });
