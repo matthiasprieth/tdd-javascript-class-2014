@@ -90,6 +90,14 @@ describe("Compass", function() {
             myCompass.increaseDegree(45);
         }
     });
+    it("compass should get degree if not is multiple of 45 degree", function() {
+        for (var i=1;i<360;i++){
+            myCompass.increaseDegree(1);
+            if(i%45 != 0){
+                expect(myCompass.getCardinalOrDegree()).toEqual(i);
+            }
+        }
+    });
     it("compass should check if out of range", function() {
         for (var i=360;i<=370;i++){
            expect(myCompass.getCardinalOrDegree(i)).toEqual('North');
