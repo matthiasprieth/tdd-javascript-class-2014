@@ -109,6 +109,13 @@ describe("Compass tests", function() {
            expect(myCompass.getCardinalOrDegree(i)).toEqual('North');
         }
     });
+    it("angle 50 should show Text 50 degree", function() {
+        spyOn(Field.prototype, 'updateText');
+        myCompass.setDegree(50);
+        showAndUpdateText('fieldId', myCompass.getCardinalOrDegree());
+
+        expect(Field.prototype.updateText).toHaveBeenCalledWith(50);
+    });
     it("angle 90 should show Text East", function() {
         spyOn(Field.prototype, 'updateText');
         myCompass.setDegree(90);
@@ -116,12 +123,19 @@ describe("Compass tests", function() {
 
         expect(Field.prototype.updateText).toHaveBeenCalledWith("East");
     });
-    it("angle 50 should show Text 50", function() {
+    it("angle 360 should show Text North", function() {
         spyOn(Field.prototype, 'updateText');
-        myCompass.setDegree(50);
+        myCompass.setDegree(360);
         showAndUpdateText('fieldId', myCompass.getCardinalOrDegree());
 
-        expect(Field.prototype.updateText).toHaveBeenCalledWith(50);
+        expect(Field.prototype.updateText).toHaveBeenCalledWith("North");
+    });
+    it("angle 0 should show Text North", function() {
+        spyOn(Field.prototype, 'updateText');
+        myCompass.setDegree(0);
+        showAndUpdateText('fieldId', myCompass.getCardinalOrDegree());
+
+        expect(Field.prototype.updateText).toHaveBeenCalledWith("North");
     });
     it("angle 90 should rotate with angle 90", function() {
         spyOn(Image.prototype, 'rotate');
