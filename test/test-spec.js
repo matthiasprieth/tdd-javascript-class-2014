@@ -12,6 +12,20 @@ Image.prototype = {
     }
 };
 
+function Field(text) {
+    this.fieldText = text;
+}
+Field.prototype = {
+
+    updateText: function(text) {
+        this.fieldText = text;
+    },
+
+    getText: function() {
+        return this.fieldText;
+    }
+};
+
 function Compass() {
     this.degree = 0;
 }
@@ -63,6 +77,11 @@ function showAndRotateImage(imageId, angle) {
     var image = new Image(imageId);
     image.show();
     image.rotate(angle);
+}
+
+function showAndUpdateText(text) {
+    var field = new Field();
+    field.updateText(text);
 }
 
 /*
@@ -121,5 +140,12 @@ describe("Compass", function() {
         showAndRotateImage('imageId', myCompass.getDegree());
 
         expect(Image.prototype.rotate).toHaveBeenCalledWith(90);
+    });
+    it("angle 90 should show Text East", function() {
+        spyOn(Field.prototype, 'updateText');
+        myCompass.setDegree(90);
+        showAndUpdateText(myCompass.getCardinalDegree());
+
+        expect(Field.prototype.updateText).toHaveBeenCalledWith("East");
     });
 });
