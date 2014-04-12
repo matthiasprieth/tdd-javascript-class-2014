@@ -1,3 +1,40 @@
+function Compass() {
+    this._degree = 0;
+    this._cardinalPoints = ["North","North-East","East","South-East","South","South-West","West","North-West"];
+}
+Compass.prototype = {
+    setDegree: function(newDegree) {
+        this._degree = newDegree;
+    },
+
+    increaseDegree: function(incDegree) {
+        this._degree += incDegree;
+    },
+
+    getCardinalPoint: function(position) {
+        return this._cardinalPoints[position];
+    },
+
+    getDegree: function() {
+        if(this._degree >= 360 || this._degree < 0){
+            this._degree = 0;
+        }
+        return this._degree;
+    },
+
+    getCardinalOrDegree: function() {
+        if(this._degree >= 360 || this._degree < 0){
+            this._degree = 0;
+            return 'North';
+        }else if (this._degree%45 === 0){
+            return this._cardinalPoints[this._degree/45];
+        }
+        else{
+            return this._degree;
+        }
+    }
+};
+
 function Image(imageId) {
     this._imageId = imageId;
 }
@@ -12,54 +49,18 @@ Image.prototype = {
     }
 };
 
-function Field(text) {
-    this.fieldText = text;
+function Field(fieldId) {
+    this._fieldId = fieldId;
+    this._fieldText = "";
 }
 Field.prototype = {
 
     updateText: function(text) {
-        this.fieldText = text;
+        this._fieldText = text;
     },
 
     getText: function() {
-        return this.fieldText;
-    }
-};
-
-function Compass() {
-    this.degree = 0;
-    this.cardinalPoints = ["North","North-East","East","South-East","South","South-West","West","North-West"];
-}
-Compass.prototype = {
-    setDegree: function(newDegree) {
-        this.degree = newDegree;
-    },
-
-    increaseDegree: function(incDegree) {
-        this.degree += incDegree;
-    },
-
-    getCardinalPoint: function(position) {
-        return this.cardinalPoints[position];
-    },
-
-    getDegree: function() {
-        if(this.degree >= 360 || this.degree < 0){
-            this.degree = 0;
-        }
-        return this.degree;
-    },
-
-    getCardinalOrDegree: function() {
-        if(this.degree >= 360 || this.degree < 0){
-            this.degree = 0;
-            return 'North';
-        }else if (this.degree%45 === 0){
-            return this.cardinalPoints[this.degree/45];
-        }
-        else{
-            return this.degree;
-        }
+        return this._fieldText;
     }
 };
 
@@ -69,18 +70,20 @@ function showAndRotateImage(imageId, angle) {
     image.rotate(angle);
 }
 
-function showAndUpdateText(text) {
-    var field = new Field();
+function showAndUpdateText(fieldId, text) {
+    var field = new Field(fieldId);
     field.updateText(text);
 }
 
-describe("Compass", function() {
+describe("Compass tests", function() {
 
     var myImage;
+    var myField;
     var myCompass;
 
     beforeEach(function(){
        myImage = new Image('imageId');
+       myField = new Field('fieldId');
        myCompass = new Compass();
     });
 
@@ -106,6 +109,20 @@ describe("Compass", function() {
            expect(myCompass.getCardinalOrDegree(i)).toEqual('North');
         }
     });
+    it("angle 90 should show Text East", function() {
+        spyOn(Field.prototype, 'updateText');
+        myCompass.setDegree(90);
+        showAndUpdateText('fieldId', myCompass.getCardinalOrDegree());
+
+        expect(Field.prototype.updateText).toHaveBeenCalledWith("East");
+    });
+    it("angle 50 should show Text 50", function() {
+        spyOn(Field.prototype, 'updateText');
+        myCompass.setDegree(50);
+        showAndUpdateText('fieldId', myCompass.getCardinalOrDegree());
+
+        expect(Field.prototype.updateText).toHaveBeenCalledWith(50);
+    });
     it("angle 90 should rotate with angle 90", function() {
         spyOn(Image.prototype, 'rotate');
         myCompass.setDegree(90);
@@ -113,18 +130,11 @@ describe("Compass", function() {
 
         expect(Image.prototype.rotate).toHaveBeenCalledWith(90);
     });
-    it("angle 90 should show Text East", function() {
-        spyOn(Field.prototype, 'updateText');
-        myCompass.setDegree(90);
-        showAndUpdateText(myCompass.getCardinalOrDegree());
+    it("angle 360 should rotate with angle 0", function() {
+        spyOn(Image.prototype, 'rotate');
+        myCompass.setDegree(360);
+        showAndRotateImage('imageId', myCompass.getDegree());
 
-        expect(Field.prototype.updateText).toHaveBeenCalledWith("East");
-    });
-    it("angle 50 should show Text 50", function() {
-        spyOn(Field.prototype, 'updateText');
-        myCompass.setDegree(50);
-        showAndUpdateText(myCompass.getCardinalOrDegree());
-
-        expect(Field.prototype.updateText).toHaveBeenCalledWith(50);
+        expect(Image.prototype.rotate).toHaveBeenCalledWith(0);
     });
 });
